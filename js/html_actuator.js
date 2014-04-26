@@ -49,6 +49,8 @@ HTMLActuator.prototype.clearContainer = function (container) {
 HTMLActuator.prototype.addTile = function (tile) {
   var self = this;
 
+  var overlay   = ['A','B','C','D','E','F'];
+  
   var wrapper   = document.createElement("div");
   var inner     = document.createElement("div");
   var position  = tile.previousPosition || { x: tile.x, y: tile.y };
@@ -62,7 +64,13 @@ HTMLActuator.prototype.addTile = function (tile) {
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
-  inner.textContent = tile.value;
+
+  this._value = overlay[Math.log(parseInt(tile.value))/Math.log(2)-1];
+  if(this._value){
+    inner.textContent = this._value;
+  }else{
+    inner.textContent = tile.value;
+  }
 
   if (tile.previousPosition) {
     // Make sure that the tile gets rendered in the previous position first
